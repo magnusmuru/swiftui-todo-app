@@ -13,7 +13,6 @@ class TodoTaskService {
     let urlString = "https://taltech.akaver.com/api/v1/TodoTasks"
     let priorityUrl: URL
     let jsonDecoder = JSONDecoder()
-    
     init() {
         guard let url = URL(string: urlString) else {
             fatalError("Url error!")

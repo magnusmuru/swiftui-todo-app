@@ -17,7 +17,6 @@ struct TodoTaskView: View {
             List {
                 ForEach(vm.localItems){ item in
                     NavigationLink {
-                        // All items have same name on getting, wtf??
                         Text(item.taskName ?? "None")
                     } label: {
                         Text(item.taskName ?? "None")

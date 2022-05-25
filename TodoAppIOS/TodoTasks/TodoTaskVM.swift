@@ -21,6 +21,7 @@ class TodoTaskVM : Combine.ObservableObject {
     
     private var service = TodoTaskService()
     
+
     @MainActor
     func getDataAsync() async {
         await context.perform {
@@ -67,16 +68,25 @@ class TodoTaskVM : Combine.ObservableObject {
     }
     
     @MainActor
-    func addItemAsync(name: String) async {
+    func addItemAsync(name: String, todoPriority: TodoPriority, todoCategory: TodoCategory, dueDt: Date) async {
         let category = TodoTask(context: self.context)
+        category.todoCategory = todoCategory
+        category.todoPriority = todoPriority
+        category.dueDt = dueDt
+        category.dueDt!.addTimeInterval(TimeInterval(0.001 * 1))
+        category.createdDt = Date.now
+        category.isArchived = false
+        category.isCompleted = false
         category.taskName = name
         category.id = UUID()
+        category.taskSort = Int32(counter)
         
         
         counter += 1
         let itemToAdd = TodoTaskEntity(taskName: category.taskName!, taskSort: counter, createdDt: category.createdDt!, dueDt: category.dueDt!, isCompleted: category.isCompleted, isArchived: category.isArchived, todoCategoryId: (category.todoCategory?.id)!, todoPriorityId: (category.todoPriority?.id)!, syncDt: Date.now)
         if let itemAdded = await service.postDataAsync(itemToAdd) {
             items.append(itemAdded)
+            category.id = itemAdded.id
             category.syncDt = itemAdded.syncDt
         }
         
@@ -91,7 +101,6 @@ class TodoTaskVM : Combine.ObservableObject {
             
         }
         localItems.append(category)
-        
     }
     
     @MainActor
