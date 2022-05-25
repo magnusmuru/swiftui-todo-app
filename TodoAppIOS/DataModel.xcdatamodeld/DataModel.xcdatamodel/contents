@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E230" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="TodoCategory" representedClassName="TodoCategory" syncable="YES" codeGenerationType="class">
+        <attribute name="categoryName" attributeType="String" minValueString="1"/>
+        <attribute name="categorySort" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="syncDt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="todoTasks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TodoTask" inverseName="todoCategory" inverseEntity="TodoTask"/>
+    </entity>
+    <entity name="TodoPriority" representedClassName="TodoPriority" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="priorityName" attributeType="String" minValueString="1"/>
+        <attribute name="prioritySort" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="syncDt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="todoTasks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TodoTask" inverseName="todoPriority" inverseEntity="TodoTask"/>
+    </entity>
+    <entity name="TodoTask" representedClassName="TodoTask" syncable="YES" codeGenerationType="class">
+        <attribute name="createdDt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dueDt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isArchived" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isCompleted" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="syncDt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="taskName" attributeType="String" minValueString="1"/>
+        <attribute name="taskSort" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="todoCategory" maxCount="1" deletionRule="Nullify" destinationEntity="TodoCategory" inverseName="todoTasks" inverseEntity="TodoCategory"/>
+        <relationship name="todoPriority" maxCount="1" deletionRule="Nullify" destinationEntity="TodoPriority" inverseName="todoTasks" inverseEntity="TodoPriority"/>
+    </entity>
+    <elements>
+        <element name="TodoCategory" positionX="-210.5546875" positionY="105.0546875" width="128" height="118"/>
+        <element name="TodoPriority" positionX="266.8203125" positionY="119.890625" width="128" height="118"/>
+        <element name="TodoTask" positionX="0" positionY="45" width="128" height="193"/>
+    </elements>
+</model>
